@@ -6,7 +6,6 @@
 # Uso: DNS_SERVER="8.8.8.8" ./src/check_dns.sh google.com
 # -----------------------------------------------------------------------------
 
-# 1. Modo estricto para un script robusto
 set -euo pipefail
 
 # 2. Validar que se recibió un argumento (el dominio)
@@ -22,19 +21,29 @@ readonly DOMAIN_TO_CHECK="$1"
 # 4. Validar y usar la variable de entorno DNS_SERVER
 readonly DNS_SERVER_TO_USE="${DNS_SERVER:-1.1.1.1}"
 
-# 5. Ejecutar la consulta, procesar la salida y mostrar el resultado
+#!/bin/bash
+
+# 5. Ejecutar la consulta, procesar la salida y mostrar/guardar el resultado
 echo "--- Consultando el dominio '$DOMAIN_TO_CHECK' usando el servidor DNS '$DNS_SERVER_TO_USE' ---"
 
+# Creamos un directorio para los resultados de DNS si no existe
+readonly OUTPUT_DIR="out/dns_checks"
+mkdir -p "${OUTPUT_DIR}"
+
+# Definimos el nombre del archivo de salida
+readonly OUTPUT_FILE="${OUTPUT_DIR}/result_${DOMAIN_TO_CHECK}.txt"
+
 # Ejecutamos el pipeline para obtener la IP
-#   - dig ...        : Realiza la consulta DNS.
-#   - grep -E '\sA\s' : Filtra las líneas que contienen un registro A (con espacios para ser preciso).
-#   - awk '{print $NF}' : De las líneas filtradas, imprime ($print) el último campo ($NF).
-IP_ADDRESS=$(dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}" | grep -E '\sA\s' | awk '{print $NF}')
+IP_ADDRESS=$(dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}" +short A | head -n 1) # Usamos +short para una salida más limpia y head por si devuelve múltiples IPs
 
 # Validamos si obtuvimos una IP
 if [ -z "$IP_ADDRESS" ]; then
-    echo "No se pudo obtener la dirección IP para '$DOMAIN_TO_CHECK'."
+    # Guardamos el error en el archivo de salida usando tee
+    echo "No se pudo obtener la dirección IP para '$DOMAIN_TO_CHECK'." | tee "${OUTPUT_FILE}"
     exit 1
 else
-    echo "La IP de '$DOMAIN_TO_CHECK' es: $IP_ADDRESS"
+    RESULT_MESSAGE="La IP de '$DOMAIN_TO_CHECK' es: $IP_ADDRESS"
+    
+    echo "$RESULT_MESSAGE" | tee "${OUTPUT_FILE}"
+    echo "Evidencia guardada en: ${OUTPUT_FILE}"
 fi
