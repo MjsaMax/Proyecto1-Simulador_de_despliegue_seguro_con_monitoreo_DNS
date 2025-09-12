@@ -2,14 +2,11 @@
 
 # -----------------------------------------------------------------------------
 # Script: check_dns.sh
-# Descripción: Realiza una consulta DNS a un dominio específico.
+# Descripción: Realiza una consulta DNS y extrae la dirección IP del registro A.
 # Uso: DNS_SERVER="8.8.8.8" ./src/check_dns.sh google.com
 # -----------------------------------------------------------------------------
 
 # 1. Modo estricto para un script robusto
-#    -e: termina el script si un comando falla
-#    -u: termina si se usa una variable no definida
-#    -o pipefail: la tubería falla si cualquier comando en ella falla
 set -euo pipefail
 
 # 2. Validar que se recibió un argumento (el dominio)
@@ -23,9 +20,21 @@ fi
 readonly DOMAIN_TO_CHECK="$1"
 
 # 4. Validar y usar la variable de entorno DNS_SERVER
-#    Si la variable DNS_SERVER está vacía o no está definida, usa "1.1.1.1" por defecto.
 readonly DNS_SERVER_TO_USE="${DNS_SERVER:-1.1.1.1}"
 
-# 5. Ejecutar la consulta DNS y mostrar la salida
+# 5. Ejecutar la consulta, procesar la salida y mostrar el resultado
 echo "--- Consultando el dominio '$DOMAIN_TO_CHECK' usando el servidor DNS '$DNS_SERVER_TO_USE' ---"
-dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}"
+
+# Ejecutamos el pipeline para obtener la IP
+#   - dig ...        : Realiza la consulta DNS.
+#   - grep -E '\sA\s' : Filtra las líneas que contienen un registro A (con espacios para ser preciso).
+#   - awk '{print $NF}' : De las líneas filtradas, imprime ($print) el último campo ($NF).
+IP_ADDRESS=$(dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}" | grep -E '\sA\s' | awk '{print $NF}')
+
+# Validamos si obtuvimos una IP
+if [ -z "$IP_ADDRESS" ]; then
+    echo "No se pudo obtener la dirección IP para '$DOMAIN_TO_CHECK'."
+    exit 1
+else
+    echo "La IP de '$DOMAIN_TO_CHECK' es: $IP_ADDRESS"
+fi
