@@ -11,7 +11,7 @@ check_http() {
     local host="$1"
     echo "Verificando HTTP para ${host}"
 
-    local http_code=$(curl -sL -o /dev/null -w "%{http_code}" "http://${host}")
+    local http_code=$(curl -sL -o /dev/null -w "%{http_code}" "http://${host}" || true)
 
     echo "El código obtenido fue: ${http_code}"
 
@@ -45,3 +45,8 @@ analyze_https(){
         return 1
     fi
 }
+case "$1" in 
+    http) check_http "$2" ;;
+    https) analyze_https "$2" ;;
+    *) echo "Uso: $0 [http|https] dominio" ;;
+esac
