@@ -10,7 +10,7 @@ help: ## Mostrar los targets disponibles
 
 # Variables
 DNS_SCRIPT = src/check_dns.sh
-HTTP_SCRIPT = src/main.sh
+HTTP_SCRIPT = src/http_check.sh
 TEST = tests/
 
 
@@ -18,14 +18,19 @@ TEST = tests/
 .PHONY: all
 all: test
 
-
 .PHONY: dns-check 
 dns-check: ## Ejecuta el script de DNS
 	@DNS_SERVER=$(DNS_SERVER) bash $(DNS_SCRIPT) $(DOMAIN)
 
-.PHONY: http-check 
-http-check: ## Ejecuta el script de HTTP
-	@bash $(HTTP_SCRIPT) $(DOMAIN)
+# HTTP check
+.PHONY: http-check
+http-check: ## Ejecuta chequeo HTTP
+	@bash $(HTTP_SCRIPT) http $(DOMAIN)
+
+# HTTPS/TLS check
+.PHONY: https-check
+https-check: ## Ejecuta chequeo HTTPS/TLS
+	@bash $(HTTP_SCRIPT) https $(DOMAIN)
 
 
 .PHONY: test 

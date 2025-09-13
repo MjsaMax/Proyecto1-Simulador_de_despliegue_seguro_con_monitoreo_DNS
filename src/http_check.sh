@@ -45,3 +45,11 @@ analyze_https(){
         return 1
     fi
 }
+if [[ "${BASH_SOURCE[0]}" == "${0}" ]]; then
+    case "$1" in
+      http)  check_http "$2" ;;
+      https) analyze_https "$2" ;;
+      *) echo "Uso: $0 [http|https] dominio" ;;
+    esac
+fi
+
