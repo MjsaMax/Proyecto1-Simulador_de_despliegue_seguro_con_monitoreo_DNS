@@ -11,7 +11,8 @@ help: ## Mostrar los targets disponibles
 # Variables
 DNS_SCRIPT = src/check_dns.sh
 HTTP_SCRIPT = src/main.sh
-TEST = tests/network_checks.bats
+TEST = tests/
+
 
 # Target por defecto
 .PHONY: all
@@ -20,11 +21,11 @@ all: test
 
 .PHONY: dns-check 
 dns-check: ## Ejecuta el script de DNS
-	@bash $(DNS_SCRIPT)
+	@DNS_SERVER=$(DNS_SERVER) bash $(DNS_SCRIPT) $(DOMAIN)
 
 .PHONY: http-check 
 http-check: ## Ejecuta el script de HTTP
-	@bash $(HTTP_SCRIPT)
+	@bash $(HTTP_SCRIPT) $(DOMAIN)
 
 
 .PHONY: test 
