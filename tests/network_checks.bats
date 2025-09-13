@@ -3,7 +3,9 @@
 load '../libs/bats-support/load'
 load '../libs/bats-assert/load'
 
-source src/main.sh
+setup() {
+    source ./src/http_check.sh
+}
 
 TARGET_HOST_VALID="google.com"
 TARGET_HOST_INVALID="noexistedominiodeprueebaproyecto1.com"
