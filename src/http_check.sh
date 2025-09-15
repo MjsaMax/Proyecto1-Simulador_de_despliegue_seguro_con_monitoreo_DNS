@@ -4,7 +4,7 @@ set -euo pipefail
 # CHEQUEO DE ESTADO HTTP
 check_http() {
     if [ $# -eq 0 ]; then
-        echo "Error en check_http: No se proporcionó un host." >&2
+        echo "Error: No se proporcionó un host." >&2
         return 1
     fi
 
@@ -15,6 +15,7 @@ check_http() {
 
     echo "El código obtenido fue: ${http_code}"
 
+# Validar resultado
     if [[ "$http_code" == "200" || "$http_code" == "301" ]]; then
         echo "El chequeo pasó."
         return 0
@@ -48,5 +49,8 @@ analyze_https(){
 case "$1" in 
     http) check_http "$2" ;;
     https) analyze_https "$2" ;;
-    *) echo "Uso: $0 [http|https] dominio" ;;
+    *)
+    echo "Uso: $0 [http|https] <dominio>"
+    exit 1
+    ;;
 esac
