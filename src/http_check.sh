@@ -10,7 +10,7 @@ fi
 host="$1"
 echo "Verificando HTTP para ${host}"
 
-# Obtener código HTTP
+#Obtener código HTTP
 http_code=$(curl -sL -o /dev/null -w "%{http_code}" "http://${host}")
 
 echo "El código obtenido fue: ${http_code}"
@@ -23,7 +23,4 @@ else
     echo "El chequeo falló."
     exit 1
 fi
-
-
-
 
