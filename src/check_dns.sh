@@ -31,8 +31,7 @@ readonly OUTPUT_FILE="${OUTPUT_DIR}/result_${DOMAIN_TO_CHECK//\//_}.txt"
 # Ejecutar la consulta y procesar la salida
 echo "--- Consultando el dominio '$DOMAIN_TO_CHECK' usando el servidor DNS '$DNS_SERVER_TO_USE' ---"
 
-FINAL_IP=$(dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}" +noall +answer | grep -E '\sA\s' | awk '{print $NF}' | tail -n1)
-
+FINAL_IP=$( (dig "@${DNS_SERVER_TO_USE}" "${DOMAIN_TO_CHECK}" +noall +answer | grep -E '\sA\s' | awk '{print $NF}' | tail -n1) || true )
 
 # Validamos si obtuvimos una IP
 if [ -z "$FINAL_IP" ]; then
