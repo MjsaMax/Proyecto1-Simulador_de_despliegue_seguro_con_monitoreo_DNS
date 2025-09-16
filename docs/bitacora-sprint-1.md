@@ -85,3 +85,34 @@ $ ./libs/bats-core/bin/bats tests/network_checks.bats
 
 3 tests, 0 failures
 ```
+
+---
+
+**Fecha:** 15 de Septiembre de 2025  
+**Integrante:** Serrano Arostegui Max Jairo  
+**Rol:** Especialista en Automatización (MAKEFILE y bats)
+
+---
+
+### **Tarea: Implementación de Pruebas Automatizadas y Makefile para Validación de Red**
+
+#### **1. Creación de Pruebas Automatizadas con Bats**
+
+Se desarrolló el archivo `tests/network_checks.bats` para validar scripts de red (`http_check.sh`, `https_check.sh` y `check_dns.sh`) usando Bats y librerías de soporte (`bats-support` y `bats-assert`). Las pruebas cubren:
+
+- Verificación de respuesta HTTP de dominios válidos e inválidos.  
+- Análisis de TLS/HTTPS para sitios seguros.  
+- Resolución de DNS para dominios válidos e inválidos.  
+
+Evidencias de ejecución:
+
+![alt text](evidencias/S1EjecucionMakeHelp.png)
+
+![alt text](evidencias/S1EjecucionMakeTest.png)
+
+![alt text](evidencias/S1EjecucionMakeDnsCheck.png)
+
+![alt text](evidencias/S1EjecucionMakeHttpCheck.png)
+
+![alt text](evidencias/S1EjecucionMakeHttpsCheck.png)
+
