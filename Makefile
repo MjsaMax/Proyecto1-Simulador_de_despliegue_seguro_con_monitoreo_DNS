@@ -19,6 +19,19 @@ TEST = tests/
 .PHONY: all
 all: test
 
+.PHONY: instalar-dependencias
+instalar-dependencias: ## Instala dependencias (Bats + librerías)
+	@echo "Instalando Bats globalmente con apt..."
+	sudo apt-get update && sudo apt-get install -y bats
+	@echo "Clonando librerías para los tests"
+	git clone https://github.com/bats-core/bats-core.git libs/bats-core || true
+	git clone https://github.com/bats-core/bats-support.git libs/bats-support || true
+	git clone https://github.com/bats-core/bats-assert.git libs/bats-assert || true
+
+.PHONY: test 
+test: ## Corre pruebas con Bats
+	@bats $(TEST)
+
 .PHONY: dns-check 
 dns-check: ## Ejecuta el script de DNS
 	@DNS_SERVER=$(DNS_SERVER) bash $(DNS_SCRIPT) $(DOMAIN)
@@ -33,7 +46,3 @@ http-check: ## Ejecuta chequeo HTTP
 https-check: ## Ejecuta chequeo HTTPS/TLS
 	@bash $(HTTPS_SCRIPT) $(DOMAIN)
 
-
-.PHONY: test 
-test: ## Corre pruebas con Bats
-	@bats $(TEST)
