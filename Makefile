@@ -22,7 +22,7 @@ all: test
 .PHONY: instalar-dependencias
 instalar-dependencias: ## Instala dependencias (Bats + librerías)
 	@echo "Instalando Bats globalmente con apt..."
-	sudo apt-get update && sudo apt-get install -y bats
+	sudo apt install bats
 	@echo "Clonando librerías para los tests"
 	git clone https://github.com/bats-core/bats-core.git libs/bats-core || true
 	git clone https://github.com/bats-core/bats-support.git libs/bats-support || true
