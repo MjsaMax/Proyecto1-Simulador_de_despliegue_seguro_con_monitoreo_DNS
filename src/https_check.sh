@@ -37,10 +37,12 @@ if src/check_dns.sh "$DOMAIN" > /dev/null; then
     else
         echo "ALERTA: Falló el handshake TLS para ${DOMAIN}."
         echo " - Puede deberse a un certificado expirado, inválido o un problema de red." >&2
-        echo -e "\n --Salida completa de OpenSSL --- \n${tls_info}\n-----"
-        exit 1      
+        
+        # Se usó para ver la información completa de tls_info
+        #echo -e "\n --Salida completa de OpenSSL --- \n${tls_info}\n-----"
+        exit 1     
     fi 
-else
+else   
     echo "Fallo de DNS. No se puede continuar con el análisis TLS." >&2
     exit 1
-fi 
+fi

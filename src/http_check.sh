@@ -28,10 +28,10 @@ if IP_ADDRESS=$(src/check_dns.sh "$DOMAIN"); then
 
     # Validar resultado
     if [[ "$http_code" == "200" || "$http_code" == "301" ]]; then
-        echo "Chequeo HTTP exitoso. Código obtenido: ${HTTP_CODE} (OK)."
+        echo "Chequeo HTTP exitoso. Código obtenido: ${http_code} (OK)."
         exit 0
     else
-        echo "ALERTA: Chequeo HTTP falló. Se obtuvo '${HTTP_CODE}'." >&2
+        echo "ALERTA: Chequeo HTTP falló. Se obtuvo '${http_code}'." >&2
         exit 1
     fi
 else
