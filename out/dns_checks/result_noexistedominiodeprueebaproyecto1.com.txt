@@ -1,1 +1,1 @@
-No se pudo obtener la dirección IP para 'noexistedominiodeprueebaproyecto1.com'.
+No se pudo obtener la dirección IP final para 'noexistedominiodeprueebaproyecto1.com'. Puede ser un dominio inválido o no tener registro A.
