@@ -149,3 +149,20 @@ Para un diagnóstico más profundo, se utilizaron herramientas de análisis de r
     ```
 * **Decisión:**
     Se decidió incluir el análisis con curl -v y ss como parte del diagnóstico para cumplir con el requisito de demostrar un entendimiento completo de la pila de red, desde la conexión del socket hasta los encabezados de la aplicación.
+
+## Sección: Estudiante 3 - Serrano Max (MAKEFILE y bats)
+
+Este sprint se enfocó en robustecer los tests Bats, mejorar la cobertura de HTTP/TLS y se aseguró la correcta instalación de dependencias.
+
+- `http_check.sh` para códigos 200 y 404 y dominios inválidos 
+  - Antes solo se verificaban dominios válidos con código 200; los 404 o dominios no resolubles quedaban sin evaluar.  
+  - Para eso se modificaron los tests en Bats para capturar correctamente todos los códigos HTTP usando `curl -sL -o /dev/null -w "%{http_code}"` y se añadieron casos de 404 y dominios inválidos.
+
+- Tests de TLS con `https_check.sh` (dominio con y sin certificado)  
+  - Debido a que algunos dominios podían no tener TLS o tener certificados inválidos; antes no se verificaban estos escenarios.  
+  - Lo que se hizo fue que se añadieron tests que ejecutan `https_check.sh` contra dominios con TLS válido y sin TLS, validando handshake exitoso o fallo de certificado.
+
+- Actualización de targets de Bats y tests de DNS 
+  - La estructura previa dificultaba identificar qué pruebas fallaban o pasaban y la cobertura de DNS estaba incompleta.  
+  - Se reorganizaron los targets y se añadieron mensajes descriptivos, incluyendo casos de DNS válidos e inválidos, para mostrar claramente los resultados de cada escenario.
+
