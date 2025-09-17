@@ -32,7 +32,7 @@ instalar-dependencias: ## Instala dependencias (Bats + librerías)
 test: ## Corre pruebas con Bats
 	@bats $(TEST)
 
-.PHONY: dns-check 
+.PHONY: dns-check
 dns-check: ## Ejecuta el script de DNS
 	@DNS_SERVER=$(DNS_SERVER) bash $(DNS_SCRIPT) $(DOMAIN)
 
