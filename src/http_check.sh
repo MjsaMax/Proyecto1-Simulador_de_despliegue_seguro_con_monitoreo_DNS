@@ -24,6 +24,7 @@ if IP_ADDRESS=$(src/check_dns.sh "$DOMAIN"); then
     echo "[Paso 2/2] Verificando código de estado HTTP..."
     http_code=$(curl -sL -o /dev/null -w "%{http_code}" "$URL")
 
+    # Validar resultado
     if [[ "$http_code" == "200" || "$http_code" == "301" ]]; then
         echo "Chequeo HTTP exitoso. Código obtenido: ${http_code} (OK)."
         exit 0
@@ -32,6 +33,7 @@ if IP_ADDRESS=$(src/check_dns.sh "$DOMAIN"); then
         exit 1
     fi
 else
+    #para cuando el DNS da un código de error 1
     echo "Fallo de DNS. No se puede continuar con el chequeo HTTP." >&2
     exit 1
 fi
