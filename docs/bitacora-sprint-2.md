@@ -1,8 +1,62 @@
-# Bitácora de Trabajo - Sprint 1
+# Bitácora de Trabajo - Sprint 2
 
 **Fecha:** 16 de Septiembre de 2025
 
+## Sección: Estudiante 1 - Aaron Davila (DNS y Parsing)
 
+Este sprint, mi foco fue el desarrollo del script `check_dns.sh`, asegurando que pudiera resolver dominios correctamente, manejar alias (CNAME), y que fuera robusto y resiliente a fallos.
+
+### 1. Desarrollo del Script `check_dns.sh` (Soporte A/CNAME)
+
+Se creó un script para resolver la dirección IP final de un dominio, con la capacidad de seguir la cadena de registros CNAME.
+
+* **Decisiones:**
+    1.  Se utilizó el comando `dig +noall +answer` para obtener únicamente la sección de respuesta, lo que simplifica el procesamiento de CNAMEs y registros A.
+    2.  Se implementó un pipeline con `grep` y `awk` para filtrar y extraer la dirección IP final de la respuesta de `dig`.
+
+* **Comando Ejecutado (CNAME):**
+    ```bash
+    ./src/check_dns.sh [www.github.com](https://www.github.com)
+    ```
+
+* **Salida Relevante:**
+    ```text
+    La IP final de '[www.github.com](https://www.github.com)' es: 140.82.112.4
+    ```
+    *Comentario: El script sigue correctamente el CNAME de `www.github.com` hasta encontrar su registro A y la IP final.*
+
+### 2. Robustecimiento del Script (Manejo de Errores)
+
+Se aseguró que el script manejara fallos de forma controlada y predecible.
+
+* **Decisiones:**
+    1.  Se incluyó `set -euo pipefail` para un comportamiento estricto ante errores.
+    2.  Se detectó que `set -e` detenía el script prematuramente al fallar `dig`. Se solucionó envolviendo el pipeline en `( ... ) || true` para permitir un fallo controlado y mostrar un mensaje de error personalizado.
+
+* **Comando para Fallo de DNS:**
+    ```bash
+    ./src/check_dns.sh dominio-invalido-12345.com
+    ```
+* **Salida:**
+    ```text
+    No se pudo obtener la dirección IP final para 'dominio-invalido-12345.com'. Puede ser un dominio inválido o no tener registro A.
+    ```
+    *Comentario: El script falla de manera controlada y muestra un mensaje claro al usuario, como se esperaba.*
+
+### 3. Verificación con Pruebas Automatizadas (Colaboración)
+
+Se colaboró con el Integrante 3 (Max) para validar la funcionalidad del script `check_dns.sh` utilizando la suite de pruebas del proyecto.
+
+* **Comando de Prueba:**
+    ```bash
+    make test
+    ```
+* **Salida (Recortada):**
+    ```text
+    ✓ dns_check() debe resolver un dominio válido
+    ✓ dns_check() debe fallar para un dominio inválido
+    ```
+    *Comentario: El script pasa exitosamente todos los casos de prueba definidos, tanto los positivos (dominios válidos) como los negativos (dominios inválidos).*
 ---
 
 ## Sección: Estudiante 2 - Walter (HTTP/TLS y Señales)
