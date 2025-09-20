@@ -1,8 +1,0 @@
-Chequeo HTTPS/TLS para google.com
-Analizando HTTPS/TLS para google.com usando openssl
-[Paso 1/2] Verificando DNS...
-DNS OK. El dominio 'google.com' es resoluble.
-[Paso 2/2] Realizando handshake TLS...
-Handshake TLS exitoso para google.com.
-Protocolo: TLSv1.3
-Cifrado: TLS_AES_256_GCM_SHA384

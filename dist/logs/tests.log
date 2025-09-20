@@ -1,9 +1,0 @@
-Ejecutando tests...
-1..7
-ok 1 http_check() devuelve 200 para un dominio válido
-ok 2 http_check() devuelve 404 para dominio con error
-ok 3 http_check() falla si DNS no resuelve
-ok 4 analyze_https() debe encontrar información de TLS para un sitio seguro
-ok 5 analyze_https() no debe encontrar información de TLS para un sitio inseguro
-ok 6 dns_check() debe resolver un dominio válido
-ok 7 dns_check() debe fallar para un dominio inválido

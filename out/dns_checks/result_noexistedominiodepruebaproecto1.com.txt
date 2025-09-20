@@ -1,1 +1,0 @@
-No se pudo obtener la dirección IP final para 'noexistedominiodepruebaproecto1.com'. Puede ser un dominio inválido o no tener registro A.
