@@ -48,12 +48,12 @@ TARGET_HOST_HTTPS_INVALID="expired.badssl.com" # Certificado inválido
     export DNS_SERVER="8.8.8.8"
     run ./src/check_dns.sh "$TARGET_HOST_VALID"
     assert_success
-    assert_output --partial "La IP de '$TARGET_HOST_VALID'"
+    assert_output --partial "La IP de '${TARGET_HOST_VALID}'"
 }
 
 @test "dns_check() debe fallar para un dominio inválido" {
     export DNS_SERVER="8.8.8.8"
     run ./src/check_dns.sh "$TARGET_HOST_INVALID"
     assert_failure
-    assert_output --partial "No se pudo obtener la dirección IP"
+    assert_output --partial "No se pudo obtener la dirección IP final"
 }
