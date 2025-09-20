@@ -1,1 +1,1 @@
-La IP de 'example.com' es: 23.220.75.232
+La IP de 'example.com' es: 23.220.75.245
