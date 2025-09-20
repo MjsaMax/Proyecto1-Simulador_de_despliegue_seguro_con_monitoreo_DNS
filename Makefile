@@ -69,3 +69,10 @@ dist: ## Genera un paquete reproducible y registra log
 	     -czf $(DIST_FILE) \
 	     Makefile README.md docs libs src systemd tests 2>&1 | tee -a $(LOG_DIR)/dist.log
 	@echo "Paquete creado en $(DIST_FILE)" | tee -a $(LOG_DIR)/dist.log
+
+.PHONY: clean
+clean: ## Limpieza segura de "out/" y "dist/"
+	@echo "Eliminando directorios de salida..."
+	@rm -rf out/ $(DIST_DIR) 
+	@echo "Directorio 'out/' y '$(DIST_DIR)/' eliminados."
+
