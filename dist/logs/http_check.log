@@ -1,0 +1,9 @@
+Chequeo HTTP para https://google.com/paginanoexiste
+Verificando HTTP para https://google.com/paginanoexiste
+[Paso 1/2] Verificando DNS...
+DNS OK. La IP de 'google.com' es: --- Consultando el dominio 'google.com' usando el servidor DNS '1.1.1.1' ---
+La IP de 'google.com' es: 142.251.133.110
+Evidencia guardada en: out/dns_checks/result_google.com.txt
+--- Script de verificación DNS finalizado ---
+[Paso 2/2] Verificando código de estado HTTP...
+ALERTA: Chequeo HTTP falló. Se obtuvo '404'.
